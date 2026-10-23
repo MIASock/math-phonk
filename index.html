@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Function Phonk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <section class="stage-wrap">
+      <canvas id="stage" width="1920" height="1080"></canvas>
+    </section>
+
+    <aside class="panel">
+      <header class="brand">
+        <h1>FUNCTION<span>PHONK</span></h1>
+        <button id="play" class="play" title="Play / stop (Space)">▶ PLAY</button>
+      </header>
+
+      <div class="group">
+        <select id="kit"></select>
+        <div class="row">
+          <label>x from <input id="xmin" value="-pi"></label>
+          <label>to <input id="xmax" value="pi"></label>
+        </div>
+        <div id="rangeErr" class="err"></div>
+        <label>Caption <input id="caption" spellcheck="false" placeholder="What does x mean? e.g. x = minutes since…"></label>
+      </div>
+
+      <div class="group">
+        <div class="group-head">
+          <span>Curves = instruments</span>
+          <button id="addLayer" class="small">+ Add curve</button>
+        </div>
+        <div class="hint">Tip: start a formula with a name, e.g. <code>speed(x) = 3x^2</code>. The name shows up in the video.</div>
+        <div id="layers" class="layers"></div>
+        <details class="help">
+          <summary>How a curve becomes sound</summary>
+          <p>Each curve is an oscillator. The highlighted <b>wave window</b> of the graph is looped hundreds of times per second, so its shape is literally the waveform you hear. The window slides along x during the sweep, so the timbre changes with the shape under the playhead.</p>
+          <p>If the window holds 3 bumps you hear 3× the pitch. Jumps and corners sound buzzy, smooth curves sound soft, <code>noise()</code> is a hi-hat.</p>
+          <p><b>Pitch</b>: "Key note" plays the chord progression, "Follow curve" picks the note from f at the playhead. Click the color dot to mute.</p>
+          <p><code>t</code> is time in seconds, so moving curves morph the sound. Use <code>^</code> for powers, <code>2x</code> works, <code>φ(x) = …</code> names a curve.</p>
+          <p>Functions: sin cos tan asin acos atan sinh cosh tanh exp ln log log2 log10 sqrt cbrt abs floor ceil round sgn frac mod(a,b) min max clamp(x,a,b) saw tri sq sinc gauss noise primes (how many primes are ≤ x). Constants: pi tau e.</p>
+        </details>
+      </div>
+
+      <div class="group">
+        <div class="grid2">
+          <label>BPM <input id="bpm" type="number" min="60" max="220" value="130"></label>
+          <label>Sweep
+            <select id="bars">
+              <option value="2">2 bars</option><option value="4">4 bars</option>
+              <option value="8" selected>8 bars</option><option value="16">16 bars</option>
+            </select>
+          </label>
+          <label>Root <select id="root"></select></label>
+          <label>Scale <select id="scale"></select></label>
+          <label>Progression <select id="prog"></select></label>
+          <label>Follow range
+            <select id="octaves">
+              <option value="1">1 octave</option><option value="2" selected>2 octaves</option><option value="3">3 octaves</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="toggles">
+          <label><input type="checkbox" id="drums" checked> Drums</label>
+        </div>
+        <label class="slider">Drive <input type="range" id="drive" min="0" max="1" step="0.01" value="0.35"></label>
+        <label class="slider">Reverb <input type="range" id="reverb" min="0" max="1" step="0.01" value="0.3"></label>
+        <label class="slider">Volume <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8"></label>
+      </div>
+
+      <div class="group">
+        <button id="share" class="share">🔗 Copy share link</button>
+        <div id="shareStatus" class="hint"></div>
+        <input id="shareLink" readonly hidden aria-label="Share link">
+      </div>
+
+      <div class="group">
+        <div class="seg" id="aspect">
+          <button data-v="16:9" class="on">16:9</button>
+          <button data-v="9:16">9:16 Reels</button>
+        </div>
+        <div class="row">
+          <button id="recSweep" class="rec">● Record one sweep</button>
+          <button id="recFree" class="rec ghost">● Record</button>
+        </div>
+        <div id="recStatus" class="hint"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
