@@ -1,4 +1,4 @@
-# Function Phonk
+# Math Phonk
 
 Type math functions and they become the instruments. Each curve is drawn, and its graph is the waveform you hear.
 
