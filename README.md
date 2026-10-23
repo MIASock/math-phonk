@@ -2,7 +2,9 @@
 
 Type math functions and they become the instruments. Each curve is drawn, and its graph is the waveform you hear.
 
-## Run
+**Try it live: https://miasock.github.io/math-phonk/**
+
+## Run locally
 
 Serve the folder with any static server and open http://localhost:5178:
 
